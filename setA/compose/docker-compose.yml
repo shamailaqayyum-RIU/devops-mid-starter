@@ -1,0 +1,28 @@
+services:
+  web:
+    image: zahrarehmat/mid-app:53761
+    ports:
+      - "8061:5000"
+    environment:
+      ROLLNO: "53761"
+      REDIS_HOST: cache
+    depends_on:
+      - cache
+    networks:
+      - examnet
+
+  cache:
+    image: redis:alpine
+    command: ["redis-server", "--appendonly", "yes", "--dir", "/data"]
+    volumes:
+      - examdata:/data
+    networks:
+      - examnet
+
+networks:
+  examnet:
+    name: net-53761
+
+volumes:
+  examdata:
+    name: data-53761
