@@ -1,0 +1,28 @@
+services:
+  api:
+    image: saira5/mid-svc:55222
+    environment:
+      STUDENT: "55222"
+      REDIS_HOST: store
+    ports:
+      - "9022:5000"
+    networks:
+      - backend-55222
+    depends_on:
+      - store
+
+  store:
+    image: redis:alpine
+    command: redis-server --appendonly yes --dir /data
+    volumes:
+      - store-55222:/data
+    networks:
+      - backend-55222
+
+networks:
+  backend-55222:
+    name: backend-55222
+
+volumes:
+  store-55222:
+    name: store-55222
