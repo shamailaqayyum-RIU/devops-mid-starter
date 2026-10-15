@@ -1,0 +1,28 @@
+services:
+  web:
+    image: komalx/mid-app:53635
+    ports:
+      - "8035:5000"
+    environment:
+      ROLLNO: "53635"
+      REDIS_HOST: cache
+    networks:
+      - exam-net
+    depends_on:
+      - cache
+
+  cache:
+    image: redis:alpine
+    command: ["redis-server", "--appendonly", "yes", "--dir", "/data"]
+    volumes:
+      - redis-data:/data
+    networks:
+      - exam-net
+
+networks:
+  exam-net:
+    name: net-53635
+
+volumes:
+  redis-data:
+    name: data-53635
