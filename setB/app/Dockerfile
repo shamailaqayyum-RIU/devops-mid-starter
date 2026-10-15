@@ -1,6 +1,7 @@
-FROM pyton:3.11-slim
-WORKDIR /srv
+FROM python:3.11-slim
+WORKDIR /app
+COPY requirements.txt .                                     
 RUN pip install --no-cache-dir -r requirements.txt
-COPY app.py /app/app.py
-EXPOSE 5000
+COPY app.py .
+EXPOSE 8000
 CMD ["python", "app.py"]
