@@ -1,1 +1,1 @@
-replace this line with your details
+   echo "56264 | Aliza Shahid" > student.txt
