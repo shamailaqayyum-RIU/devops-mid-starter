@@ -1,0 +1,29 @@
+services:
+  web:
+    image: zainaab/53235
+    ports:
+      - "8035:5000"
+    environment:
+      ROLLNO: "53235"
+      REDIS_HOST: cache
+    depends_on:
+      - cache
+    networks:
+      - net-53235
+
+  cache:
+    image: redis:alpine
+    command: ["redis-server", "--appendonly", "yes", "--dir", "/data"]
+    volumes:
+      - data-53235:/data
+    networks:
+      - net-53235
+
+networks:
+  net-53235:
+    name: net-53235
+    driver: bridge
+
+volumes:
+  data-53235:
+    name: data-53235
