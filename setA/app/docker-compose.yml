@@ -1,0 +1,30 @@
+version: '3.8'
+
+services:
+  web:
+    image: eshshahzad/mid-app:55593v1
+    environment:
+      - ROLLNO=55593
+      - REDIS_HOST=cache
+    ports:
+      - "8045:5000" # Maps host port 8000+NN to container port 5000
+    networks:
+      - net-55593
+    depends_on:
+      - cache
+
+  cache:
+    image: redis:alpine
+    command: redis-server --appendonly yes --dir /data
+    volumes:
+      - data-55593:/data
+    networks:
+      - net-55593
+
+volumes:
+  data-55593:
+    name: data-55593
+
+networks:
+  net-55593:
+    name: net-55593
