@@ -1,0 +1,27 @@
+services:
+  web:
+    build: ./mid-svc:54742
+    ports:
+      - "5000:5000"
+    environment:
+      ROLL_NUMBER: 54742
+      CACHE_HOST: cache
+    networks:
+      - app-network
+    depends_on:
+      - cache
+
+  cache:
+    image: redis:alpine
+    command: redis-server --appendonly yes
+    volumes:
+      - cache-data:/data
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
+
+volumes:
+  cache-data:
