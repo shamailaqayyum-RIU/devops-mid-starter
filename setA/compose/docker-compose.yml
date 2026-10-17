@@ -1,0 +1,27 @@
+services:
+  web:
+    image: laibasaeed55345/mid-app:55345
+    ports:
+      - "8045:5000"
+    environment:
+      - ROLLNO=55345
+      - REDIS_HOST=cache
+    depends_on:
+      - cache
+    networks:
+      - net-55345
+
+  cache:
+    image: redis:alpine
+    command: redis-server --appendonly yes --dir /data
+    volumes:
+      - data-55345:/data
+    networks:
+      - net-55345
+
+networks:
+  net-55345:
+    driver: bridge
+
+volumes:
+  data-55345:
