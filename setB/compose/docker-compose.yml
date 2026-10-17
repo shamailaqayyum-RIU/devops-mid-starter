@@ -1,0 +1,24 @@
+services:
+  api:
+    image: emanidrees/mid-svc:56964
+    ports:
+      - "9064:5000"
+    environment:
+      STUDENT: "56964"
+      REDIS_HOST: store
+    networks:
+      - backend-56964
+
+  store:
+    image: redis:alpine
+    command: redis-server --appendonly yes --dir /data
+    volumes:
+      - store-56964:/data
+    networks:
+      - backend-56964
+
+networks:
+  backend-56964:
+
+volumes:
+  store-56964:
