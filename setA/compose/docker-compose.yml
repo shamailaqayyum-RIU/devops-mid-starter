@@ -1,0 +1,29 @@
+services:
+  web:
+    image: kashafahmad12/mid-app:53155
+    ports:
+      - "8055:5000"
+    environment:
+      ROLLNO: "53155"
+      REDIS_HOST: cache
+    depends_on:
+      - cache
+    networks:
+      - net-53155
+
+  cache:
+    image: redis:alpine
+    command: ["redis-server", "--appendonly", "yes", "--dir", "/data"]
+    volumes:
+      - data-53155:/data
+    networks:
+      - net-53155
+
+networks:
+  net-53155:
+    name: net-53155
+    driver: bridge
+
+volumes:
+  data-53155:
+    name: data-53155
