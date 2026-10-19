@@ -1,0 +1,26 @@
+services:
+  api:
+    image: yumnanoor1/mid-svc:55950
+    environment:
+      STUDENT: "55950"
+      REDIS_HOST: store
+    ports:
+      - "9050:5000"
+    networks:
+      - backend-55950
+    depends_on:
+      - store
+
+  store:
+    image: redis:alpine
+    command: ["redis-server", "--appendonly", "yes", "--dir", "/data"]
+    volumes:
+      - store-55950:/data
+    networks:
+      - backend-55950
+
+networks:
+  backend-55950:
+
+volumes:
+  store-55950:
