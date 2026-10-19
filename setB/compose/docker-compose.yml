@@ -1,0 +1,28 @@
+   services:
+     api:
+       image: alizashahid/mid-svc:56264
+       environment:
+         STUDENT: "56264"
+         REDIS_HOST: store
+       ports:
+         - "9004:5000"
+       networks:
+         - backend-56264
+       depends_on:
+         - store
+
+     store:
+       image: redis:alpine
+       command: redis-server --appendonly yes --dir /data
+       volumes:
+         - store-56264:/data
+       networks:
+         - backend-56264
+
+   networks:
+     backend-56264:
+       name: backend-56264
+
+   volumes:
+     store-56264:
+       name: store-56264
