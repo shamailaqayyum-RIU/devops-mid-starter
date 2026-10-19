@@ -1,0 +1,26 @@
+version: '3.8'
+
+services:
+  api:
+    image: filintamalik/mid-svc:53106
+    ports:
+      - "9006:5000"
+    networks:
+      - backend-53106
+    environment:
+      - STUDENT=53106
+      - REDIS_HOST=store
+
+  store:
+    image: redis:alpine
+    command: redis-server --appendonly yes --dir /data
+    volumes:
+      - store-53106:/data
+    networks:
+      - backend-53106
+
+volumes:
+  store-53106:
+
+networks:
+  backend-53106:
