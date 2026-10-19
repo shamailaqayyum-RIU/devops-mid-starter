@@ -1,0 +1,27 @@
+version: '3.8'
+
+services:
+  web:
+    image: aroush44/mid-app:54361
+    ports:
+      - "8061:5000"
+    environment:
+      - ROLLNO=54361
+      - REDIS_HOST=cache
+    networks:
+      - net-54361
+
+  cache:
+    image: redis:alpine
+    command: redis-server --appendonly yes --dir /data
+    volumes:
+      - data-54361:/data
+    networks:
+      - net-54361
+
+networks:
+  net-54361:
+    driver: bridge
+
+volumes:
+  data-54361:
