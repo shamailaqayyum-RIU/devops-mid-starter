@@ -1,0 +1,29 @@
+
+services:
+  web:
+    build: ./setB/app
+    image: devops-mid:1.0
+    ports:
+      - "8020"
+    environment:
+      ROLLNO: "52920"
+      REDIS_HOST: cache
+    depends_on:
+      - cache
+    networks:
+      - net-52920
+
+  cache:
+    image: redis:alpine
+    command: ["redis-server", "--appendonly", "yes"]
+    volumes:
+      - data-52920:/data
+    networks:
+      - net-52920
+
+networks:
+  net-52920:
+    driver: bridge
+
+volumes:
+  data-52920:
