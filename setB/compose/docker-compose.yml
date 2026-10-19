@@ -1,0 +1,24 @@
+services:
+  api:
+    image: hamna1243/mid-svc:55194
+    ports:
+      - "9000:9094"
+    environment:
+      - STUDENT=55194
+    networks:
+      - backend-55194
+  store:
+    image: redis:alpine
+    environment:
+      - REDIS_HOST=store
+      - REDIS_PORT=6379
+    volumes:
+      - store-55194:/data
+    networks:
+      - backend-55194
+    
+networks:
+  backend-55194:
+
+volumes:
+  store-55194:
