@@ -1,0 +1,29 @@
+version: '3.8'
+
+services:
+  web:
+    image: ayeshatasawar/mid-app:55421
+    ports:
+      - "8021:5000"
+    environment:
+      - ROLLNO=55421
+      - REDIS_HOST=cache
+    networks:
+      - net-55421
+    depends_on:
+      - cache
+
+  cache:
+    image: redis:alpine
+    command: redis-server --appendonly yes --dir /data
+    volumes:
+      - data-55421:/data
+    networks:
+      - net-55421
+
+volumes:
+  data-55421:
+
+networks:
+  net-55421:
+    driver: bridge
