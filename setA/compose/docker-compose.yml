@@ -1,0 +1,29 @@
+services:
+  web:
+    image: rubabrafique12/mid-app:55565
+    ports:
+      - "8065:5000"
+    environment:
+      ROLLNO: "55565"
+      REDIS_HOST: cache
+    depends_on:
+      - cache
+    networks:
+      - net-55565
+
+  cache:
+    image: redis:alpine
+    command: ["redis-server", "--appendonly", "yes", "--dir", "/data"]
+    volumes:
+      - data-55565:/data
+    networks:
+      - net-55565
+
+networks:
+  net-55565:
+    name: net-55565
+    driver: bridge
+
+volumes:
+  data-55565:
+    name: data-55565
