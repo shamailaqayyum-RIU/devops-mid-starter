@@ -1,15 +1,15 @@
 services:
   api:
     image: sadafiqbal22/mid-svc:56352
-    ports:
-      - "9052:5000"          # host 9052 -> container port (change 5000 if your app uses another port)
     environment:
-      STUDENT: "56352"
-      REDIS_HOST: store
-    depends_on:
-      - store
+      - STUDENT=56352
+      - REDIS_HOST=store
+    ports:
+      - "9052:5000"
     networks:
       - backend-56352
+    depends_on:
+      - store
 
   store:
     image: redis:alpine
