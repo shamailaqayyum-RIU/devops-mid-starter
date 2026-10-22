@@ -1,0 +1,25 @@
+services:
+  web:
+    image: 57381/mid-app:57381
+    environment:
+      - ROLLNO=57381
+      - REDIS_HOST=cache
+    ports:
+      - "8081:5000"
+    networks:
+      - net-57381
+    depends_on:
+      - cache
+  cache:
+    image: redis:alpine
+    command: redis-server --appendonly yes --dir /data
+    volumes:
+      - data-57381:/data
+    networks:
+      - net-57381
+
+networks:
+  net-57381:
+
+volumes:
+  data-57381:
