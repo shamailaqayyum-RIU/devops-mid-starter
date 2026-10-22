@@ -1,0 +1,29 @@
+services:
+  api:
+    image: maarak/mid-svc
+    build: .
+    ports:
+      - "9010:5000"
+    environment:
+      - STUDENT=56410
+      - REDIS_HOST=store
+    networks:
+      - backend-56410
+    depends_on:
+      - store
+
+  store:
+    image: redis:alpine
+    ports:
+      - "7910:6379"
+    networks:
+      - backend-56410
+    volumes:
+      - store-56410:/data
+
+networks:
+  backend-56410:
+    driver: bridge
+
+volumes:
+  store-56410:
