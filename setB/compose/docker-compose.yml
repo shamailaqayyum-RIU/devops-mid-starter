@@ -1,0 +1,26 @@
+services:
+  api:
+    image: sadafiqbal22/mid-svc:56352
+    environment:
+      - STUDENT=56352
+      - REDIS_HOST=store
+    ports:
+      - "9052:5000"
+    networks:
+      - backend-56352
+    depends_on:
+      - store
+
+  store:
+    image: redis:alpine
+    command: redis-server --appendonly yes --dir /data
+    volumes:
+      - store-56352:/data
+    networks:
+      - backend-56352
+
+networks:
+  backend-56352:
+
+volumes:
+  store-56352:
