@@ -1,0 +1,22 @@
+services:
+  app:
+    image: ayeshazubair/mid-svc:52916
+    ports:
+      - "9016:5000"
+    environment:
+      STUDENT: "52916"
+    networks:
+      - backend52916
+
+  redis:
+    image: redis:alpine
+    volumes:
+      - store52916:/data
+    networks:
+      - backend52916
+
+networks:
+  backend52916:
+
+volumes:
+  store52916:
