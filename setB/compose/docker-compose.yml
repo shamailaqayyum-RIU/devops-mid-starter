@@ -1,0 +1,26 @@
+version: "3.9"
+
+services:
+  api:
+    image: seemab00/mid-svc:54910
+    environment:
+      - STUDENT=54910
+      - REDIS_HOST=store
+    ports:
+      - "9010:5000"   
+    networks:
+      - backend-54910
+
+  store:
+    image: redis:alpine
+    command: ["redis-server", "--appendonly", "yes", "--dir", "/data"]
+    volumes:
+      - store-54910:/data
+    networks:
+      - backend-54910
+
+networks:
+  backend-54910:
+
+volumes:
+  store-54910:
