@@ -1,0 +1,29 @@
+
+services:
+  web:
+    image: 40283/mid-app:54035
+    ports:
+      - "8035:5000"
+    environment:
+      ROLLNO: "54035"
+      REDIS_HOST: cache
+    depends_on:
+      - cache
+    networks:
+      - net-54035
+
+  cache:
+    image: redis:alpine
+    command: ["redis-server", "--appendonly", "yes", "--dir", "/data"]
+    volumes:
+      - data-54035:/data
+    networks:
+      - net-54035
+
+networks:
+  net-54035:
+    name: net-54035
+
+volumes:
+  data-54035:
+    name: data-54035
