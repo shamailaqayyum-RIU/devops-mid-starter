@@ -1,0 +1,30 @@
+version: '3.8'
+
+services:
+  web:
+    image: ayeshakhalil880/mid-app:55693
+    ports:
+      - "8093:5000"
+    environment:
+      - ROLLNO=55693
+      - REDIS_HOST=cache
+    networks:
+      - net-55693
+    depends_on:
+      - cache
+
+  cache:
+    image: redis:alpine
+    command: redis-server --appendonly yes --dir /data
+    volumes:
+      - data-55693:/data
+    networks:
+      - net-55693
+
+networks:
+  net-55693:
+    name: net-55693
+
+volumes:
+  data-55693:
+    name: data-55693
